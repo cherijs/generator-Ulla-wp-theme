@@ -1,0 +1,89 @@
+.menu {
+  clear: both;
+  display: block;
+  ul {
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+  }
+  .current_page_item > a,
+  .current-menu-item > a,
+  .current_page_ancestor > a {
+    color: red;
+  }
+}
+
+#shop {
+  // border: solid 1px red;
+  position: relative;
+  width: 760px;
+  @include clearfix;
+  // @include transition(all 0.35s);
+  * {
+    position: relative;
+  }
+  a {
+    text-decoration: none;
+    color: #231f20;
+    &:hover, &.active {
+      color: black;
+      font-weight: bold;
+    }
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+      padding: 5px 30px 5px 30px;
+    }
+  }
+  #container3 {
+    float: left;
+    width: 100%;
+    background: #97fbe5;
+    overflow: hidden;
+    position: relative;
+  }
+  #container2 {
+    float: left;
+    width: 100%;
+    background: #87eff9;
+    position: relative;
+    right: 30%;
+  }
+  #container1 {
+    float: left;
+    width: 100%;
+    background: #f9e7ef;
+    position: relative;
+    right: 40%;
+  }
+  div.main_cat {
+    float: left;
+    width: 30%;
+    position: relative;
+    left: 70%;
+    overflow: hidden;
+  }
+  div.sub_cat {
+    float: left;
+    width: 40%;
+    position: relative;
+    left: 70%;
+    overflow: hidden;
+    ul {
+      // &:not(:first-child) {
+      display: none;
+      // }
+   
+    }
+  }
+  div.shop_ads {
+    float: left;
+    width: 30%;
+    position: relative;
+    left: 70%;
+    overflow: hidden;
+  }
+}

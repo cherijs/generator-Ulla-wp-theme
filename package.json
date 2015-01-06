@@ -1,0 +1,36 @@
+{
+    "name": "generator-ulla-wp-theme",
+    "version": "0.0.1",
+    "description": "A starting point for developing Wordpress themes",
+    "keywords": [
+        "yeoman-generator",
+        "Wordpress theme",
+        "Wordpress",
+        "Theme",
+        "Development",
+        "PHP",
+        "Sass",
+        "Grunt"
+    ],
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Arturs Cirsis (https://github.com/cherijs)",
+    "license": "ISC",
+    "dependencies": {
+        "yeoman-generator": "^0.17.1",
+        "chalk": "^0.5.0"
+    },
+    "bugs": {
+        "url": "https://github.com/cherijs/generator-Ulla-wp-theme/issues"
+    },
+    "homepage": "https://github.com/cherijs/generator-Ulla-wp-theme",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/cherijs/generator-Ulla-wp-theme"
+    },
+    "files": [
+        "app"
+    ]
+}
