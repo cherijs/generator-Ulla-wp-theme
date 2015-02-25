@@ -135,7 +135,7 @@ module.exports = function(grunt) {
                 fileTypes: {
                     html: {
                         replace: {
-                            js: '<script src="/assets/themes/<%= site_nameSpace %>/{{filePath}}"></script>'
+                            js: '<script src="/wp-content/themes/<%= site_nameSpace %>/{{filePath}}"></script>'
                         }
                     }
                 }
@@ -146,7 +146,7 @@ module.exports = function(grunt) {
                 fileTypes: {
                     html: {
                         replace: {
-                            css: '<link rel="stylesheet" href="/assets/themes/<%= site_nameSpace %>/{{filePath}}" type="text/css" media="all">'
+                            css: '<link rel="stylesheet" href="/wp-content/themes/<%= site_nameSpace %>/{{filePath}}" type="text/css" media="all">'
                         }
                     }
                 }
