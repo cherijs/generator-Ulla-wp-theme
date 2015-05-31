@@ -97,46 +97,6 @@
         // });
 
 
-        var $active_sub = $('ul.main_cat a.active').attr('data-id');
-        // $('ul.sub_cat a.active').parent().parent().show();
-        $('ul.sub_cat[data-parent=' + $active_sub + ']').show();
-
-        $('ul.main_cat a').mouseover(function(event) {
-            event.preventDefault();
-            var $category = $(event.currentTarget).attr('data-id');
-
-            $('ul.sub_cat').hide();
-            $('ul.sub_cat[data-parent=' + $category + ']').show();
-            $('ul.main_cat a').removeClass('active');
-            $(this).addClass('active');
-
-        });
-
-
-
-        $('ul.main_cat a').mouseout(function(event) {
-            event.preventDefault();
-            var $category = $(event.currentTarget).attr('data-id');
-
-
-        });
-
-
-        $("ul.main_cat a").on("click", function(event) {
-            // event.preventDefault();
-        });
-
-
-        //subcat izmers
-        var subcat_height = 0;
-        $("ul.sub_cat").each(function(index) {
-            // console.log(index + ": " + $(this).height());
-            if ($(this).height() > subcat_height) {
-                subcat_height = $(this).height();
-            }
-        });
-        $("div.sub_cat").height(subcat_height);
-
 
 
 

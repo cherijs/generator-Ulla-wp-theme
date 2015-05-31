@@ -9,10 +9,10 @@ module.exports = function(grunt) {
 
         //watch
         watch: {
-            bower: {
-                // files: ['bower.json'],
-                // tasks: ['bowerInstall']
-            },
+            // bower: {
+            //     files: ['bower.json'],
+            //     tasks: ['bowerInstall']
+            // },
             gruntfile: {
                 files: ['Gruntfile.js']
             },
