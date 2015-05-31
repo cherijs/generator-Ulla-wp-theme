@@ -162,25 +162,30 @@ var StartWPSiteGenerator = yeoman.generators.Base.extend({
 
         //copy the base images that are used by the options setup (for the example)
         this.directory('frameworks/images', this.themeNameSpace + '/dev/src/images');
+        this.directory('frameworks/fonts', this.themeNameSpace + '/dev/src/fonts');
 
 
         //copy framework/base js across
         this.directory('frameworks/js', this.themeNameSpace + '/dev/src/js');
 
         //build sass dirs so I can process templates
-        this.directory('frameworks/scss/elements', this.themeNameSpace + '/dev/src/scss/elements');
         this.directory('frameworks/scss/forms', this.themeNameSpace + '/dev/src/scss/forms');
-        this.directory('frameworks/scss/layout', this.themeNameSpace + '/dev/src/scss/layout');
-        this.directory('frameworks/scss/media', this.themeNameSpace + '/dev/src/scss/media');
+        this.directory('frameworks/scss/fotorama', this.themeNameSpace + '/dev/src/scss/fotorama');
+        this.directory('frameworks/scss/magnific-popup', this.themeNameSpace + '/dev/src/scss/magnific-popup');
         this.directory('frameworks/scss/media_queries', this.themeNameSpace + '/dev/src/scss/media_queries');
         this.directory('frameworks/scss/mixins', this.themeNameSpace + '/dev/src/scss/mixins');
         this.directory('frameworks/scss/modules', this.themeNameSpace + '/dev/src/scss/modules');
-        this.directory('frameworks/scss/navigation', this.themeNameSpace + '/dev/src/scss/navigation');
-        this.directory('frameworks/scss/site', this.themeNameSpace + '/dev/src/scss/site');
+        this.directory('frameworks/scss/swiper', this.themeNameSpace + '/dev/src/scss/swiper');
         this.directory('frameworks/scss/typography', this.themeNameSpace + '/dev/src/scss/typography');
-        this.directory('frameworks/scss/variables-site', this.themeNameSpace + '/dev/src/scss/variables-site');
 
+        this.template('frameworks/scss/_global.scss', this.themeNameSpace + '/dev/src/scss/_global.scss', context);
+        this.template('frameworks/scss/_navigation.scss', this.themeNameSpace + '/dev/src/scss/_navigation.scss', context);
+        this.template('frameworks/scss/_page.scss', this.themeNameSpace + '/dev/src/scss/_page.scss', context);
         this.template('frameworks/scss/_reset.scss', this.themeNameSpace + '/dev/src/scss/_reset.scss', context);
+        this.template('frameworks/scss/_socailfeed.scss', this.themeNameSpace + '/dev/src/scss/_socailfeed.scss', context);
+        this.template('frameworks/scss/_sound.scss', this.themeNameSpace + '/dev/src/scss/_sound.scss', context);
+        this.template('frameworks/scss/_vars.scss', this.themeNameSpace + '/dev/src/scss/_vars.scss', context);
+        this.template('frameworks/scss/custom-editor-style.scss', this.themeNameSpace + '/dev/src/scss/custom-editor-style.scss', context);
         this.template('frameworks/scss/style.scss', this.themeNameSpace + '/dev/src/scss/style.scss', context);
 
 
