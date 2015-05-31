@@ -6,6 +6,10 @@
  */
 
 
+	date_default_timezone_set('Europe/Riga');
+	$oldLocale = setlocale(LC_TIME, 'lv_LV.utf8');
+	setlocale(LC_TIME, $oldLocale);
+
 
 	// Theme Setup (based on twentythirteen: http://make.wordpress.org/core/tag/twentythirteen/)
 	function <%= themeNameSpace %>_setup() {
@@ -35,8 +39,14 @@
 
 	function <%= themeNameSpace %>_enqueue_scripts() {
 	    wp_enqueue_style( '<%= themeNameSpace %>-styles', get_template_directory_uri() . '/static/css/style.css' ); //our stylesheet
-	    wp_enqueue_script( 'jquery' );
-	    wp_enqueue_script( 'default-scripts', get_template_directory_uri() . '/static/js/footer.js', array(), '1.0', true );
+
+	    // wp_enqueue_script( 'jquery' );
+	    // wp_enqueue_script( 'default-scripts', get_template_directory_uri() . '/static/js/footer.js', array(), '1.0', true );
+
+	    wp_deregister_script('jquery');
+	    wp_register_script('jquery', get_template_directory_uri() . '/static/js/app.min.js', array(), '0.0.1', true);
+	    wp_enqueue_script('jquery');
+
 	    if ( is_singular() ) {
 	    	// wp_enqueue_script( 'comment-reply' )
 	    };
@@ -44,7 +54,10 @@
 	add_action( 'wp_enqueue_scripts', '<%= themeNameSpace %>_enqueue_scripts' );
 
 
-
+	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+	remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+	remove_action( 'wp_print_styles', 'print_emoji_styles' );
+	remove_action( 'admin_print_styles', 'print_emoji_styles' );
 
 
 
@@ -323,8 +336,108 @@ add_filter('show_admin_bar', '__return_false');
 
 
 
+function the_excerpt_max_charlength($charlength, $echo=true) {
+    $excerpt = get_the_excerpt();
+    $charlength++;
+    $output = "";
+    if ( mb_strlen( $excerpt ) > $charlength ) {
+        $subex = mb_substr( $excerpt, 0, $charlength - 5 );
+        $exwords = explode( ' ', $subex );
+        $excut = - ( mb_strlen( $exwords[ count( $exwords ) - 1 ] ) );
+        if ( $excut < 0 ) {
+            $output .= mb_substr( $subex, 0, $excut );
+        } else {
+            $output .= $subex;
+        }
+        $output .= '...';
+    } else {
+        $output .= $excerpt;
+    }
+    if($echo){
+        echo $output;
+    } else {
+        return $output;
+    }
+}
 
 
+
+
+add_shortcode('gallery', 'fotorama_gallery_shortcode');
+add_shortcode('fotorama', 'fotorama_gallery_shortcode');
+
+function fotorama_gallery_shortcode($atts)
+{
+    if (!$atts) {
+        $atts = array();
+    }
+
+    if (array_key_exists('fotorama', $atts) && $atts['fotorama'] == 'false') {
+        return gallery_shortcode($atts);
+    }
+
+    $atts['link'] = 'file';
+    $atts['itemtag'] = 'dl';
+    $atts['icontag'] = 'dt';
+    $atts['captiontag'] = 'dd';
+    $atts['columns'] = 0;
+
+    if (array_key_exists('orderby', $atts) && $atts['orderby'] == 'rand') {
+        $atts['orderby'] = '';
+        $atts['shuffle'] = 'true';
+    }
+
+    $atts['size'] = 'thumbnail';
+    $gallery = gallery_shortcode($atts);
+
+    $width = array_key_exists('width', $atts) ? $atts['width'] : '';
+    $height = array_key_exists('height', $atts) ? $atts['height'] : '';
+
+    $atts['size'] = 'large';
+    preg_match_all('/(<img[^<>]*>).*\n*.*<\/dt/', gallery_shortcode($atts), $images);
+    preg_match_all('/href=(\'|")([^"\']+)(\'|").*\n*.*<\/dt/', $gallery, $hrefs);
+
+    for ($i = 0, $l = count($images[0]); $i < $l; $i++) {
+        $image = $images[1][$i];
+        preg_match('/src=(\'|")([^"\']+)(\'|")/', $image, $src);
+
+        if (!$i) {
+            preg_match('/width=(\'|")([^"\']+)(\'|")/', $image, $__width);
+            $_width = $__width[2];
+
+            preg_match('/height=(\'|")([^"\']+)(\'|")/', $image, $__height);
+            $_height = $__height[2];
+
+            if (!$width) {
+                $atts['width'] = $_width;
+            }
+
+            if (!$height) {
+                $height = $_height;
+            }
+        }
+
+        $quote = $hrefs[1][$i];
+        $full = $hrefs[2][$i];
+
+        $gallery = str_replace($quote . $full . $quote,
+            $quote . $src[2] . $quote . ' data-full=' . $quote . $full . $quote,
+            $gallery);
+    }
+
+    $atts['auto'] = 'false';
+    $atts['max-width'] = '100%';
+    $atts['ratio'] = array_key_exists('ratio', $atts) ? $atts['ratio'] : ($_width && $_height ? $_width / $_height : '');
+
+    $data = '';
+    foreach ($atts as $key => $value) {
+        if ($key != 'fotorama') {
+            $data .= "data-$key='$value'";
+        }
+    }
+
+    return "<div data-nav='thumbs' data-allowfullscreen='true' data-fit='scaledown' data-auto='false'  class='fotorama hidden fotorama--wp' $data>$gallery</div>";
+}
 
 
 

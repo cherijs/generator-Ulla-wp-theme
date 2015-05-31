@@ -1,3 +1,5 @@
+$debug: false !default;
+
 /**
  * 15.0 Media Queries
  */
@@ -8,6 +10,53 @@
  * render responsive styling in Windows 8 "snapped" views; IE10+ does not honor
  * the meta tag. See https://core.trac.wordpress.org/ticket/25888.
  */
+
+/**
+ * 15.1 Mobile Large 620px
+ */
+$mobile: "screen and (min-width: 38.75em)";
+
+/**
+ * 15.2 Tablet Small 740px
+ */
+$tablet-small: "screen and (min-width: 46.25em)";
+
+/**
+ * 15.3 Tablet Large 880px
+ */
+
+$tablet-large: "screen and (min-width: 55em)";
+
+/**
+ * 15.4 Desktop Small 955px
+ */
+
+$desktop-small: "screen and (min-width: 59.6875em)";
+
+/**
+ * 15.5 Desktop Medium 1100px
+ */
+
+$desktop-medium: "screen and (min-width: 68.75em)";
+
+/**
+ * 15.6 Desktop Large 1240px
+ */
+
+$desktop-large: "screen and (min-width: 77.5em)";
+
+/**
+ * 15.7 Desktop X-Large 1403px
+ */
+
+$desktop-x: "screen and (min-width: 87.6875em)";
+
+/**
+ * 16.0 Print
+ */
+
+$print: "print";
+
 @-ms-viewport {
   width: device-width;
 }
@@ -22,14 +71,21 @@
  * 15.1 Mobile Large 620px
  */
 @include respond($mobile) {
+  html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
   body {
-    &:before {
-      position: fixed;
-      right: 0;
-      top: 0;
-      padding: 10px;
-      content: 'mobile-large';
-      background: hsla(10 * 1, 90, 96, 1);
+    @if $debug {
+      &:before {
+        position: fixed;
+        z-index: 100;
+        right: 0;
+        top: 0;
+        padding: 10px;
+        content: 'mobile-large';
+        background: hsla(10 * 1, 90, 96, 1);
+      }
     }
   }
 }
@@ -41,13 +97,16 @@
 
 @include respond($tablet-small) {
   body {
-    &:before {
-      position: fixed;
-      right: 0;
-      top: 0;
-      padding: 10px;
-      content: 'tablet-small';
-      background: hsla(10 * 4, 90, 96, 1);
+    @if $debug {
+      &:before {
+        position: fixed;
+        z-index: 100;
+        right: 0;
+        top: 0;
+        padding: 10px;
+        content: 'tablet-small';
+        background: hsla(10 * 4, 90, 96, 1);
+      }
     }
   }
 }
@@ -59,13 +118,16 @@
 
 @include respond($tablet-large) {
   body {
-    &:before {
-      position: fixed;
-      right: 0;
-      top: 0;
-      padding: 10px;
-      content: 'tablet-large';
-      background: hsla(10 * 8, 90, 96, 1);
+    @if $debug {
+      &:before {
+        position: fixed;
+        z-index: 100;
+        right: 0;
+        top: 0;
+        padding: 10px;
+        content: 'tablet-large';
+        background: hsla(10 * 8, 90, 96, 1);
+      }
     }
   }
 }
@@ -77,13 +139,16 @@
 
 @include respond($desktop-small) {
   body {
-    &:before {
-      position: fixed;
-      right: 0;
-      top: 0;
-      padding: 10px;
-      content: 'desktop-small';
-      background: hsla(10 * 12, 90, 96, 1);
+    @if $debug {
+      &:before {
+        position: fixed;
+        z-index: 100;
+        right: 0;
+        top: 0;
+        padding: 10px;
+        content: 'desktop-small';
+        background: hsla(10 * 12, 90, 96, 1);
+      }
     }
   }
 }
@@ -95,13 +160,16 @@
 
 @include respond($desktop-medium) {
   body {
-    &:before {
-      position: fixed;
-      right: 0;
-      top: 0;
-      padding: 10px;
-      content: 'desktop-medium';
-      background: hsla(10 * 16, 90, 96, 1);
+    @if $debug {
+      &:before {
+        position: fixed;
+        z-index: 100;
+        right: 0;
+        top: 0;
+        padding: 10px;
+        content: 'desktop-medium';
+        background: hsla(10 * 16, 90, 96, 1);
+      }
     }
   }
 }
@@ -112,14 +180,23 @@
  */
 @include respond($desktop-large) {
   body {
-    &:before {
-      position: fixed;
-      right: 0;
-      top: 0;
-      padding: 10px;
-      content: 'desktop-large';
-      background: hsla(10 * 20, 90, 96, 1);
+    @if $debug {
+      &:before {
+        position: fixed;
+        z-index: 100;
+        right: 0;
+        top: 0;
+        padding: 10px;
+        content: 'desktop-large';
+        background: hsla(10 * 20, 90, 96, 1);
+      }
     }
+  }
+  .wraper {
+    max-width: 1200px;
+    margin: 0 auto;
+    // background-color: red;
+ 
   }
 }
 
@@ -130,16 +207,19 @@
 
 @include respond($desktop-x) {
   body {
-    &:before {
-      position: fixed;
-      right: 0;
-      top: 0;
-      padding: 10px;
-      content: 'desktop-x';
-      background: hsla(10 * 30, 90, 96, 1);
-      // width: -webkit-calc(50% - 289px);
-      // width: calc(50% - 289px);
-   
+    @if $debug {
+      &:before {
+        position: fixed;
+        z-index: 100;
+        right: 0;
+        top: 0;
+        padding: 10px;
+        content: 'desktop-x';
+        background: hsla(10 * 30, 90, 96, 1);
+        // width: -webkit-calc(50% - 289px);
+        // width: calc(50% - 289px);
+     
+      }
     }
   }
 }

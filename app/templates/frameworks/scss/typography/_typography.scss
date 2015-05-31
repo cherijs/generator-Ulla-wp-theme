@@ -1,14 +1,79 @@
+$font__main: "ProximaNova", sans-serif;
+$font__sub: "FuturaNew", sans-serif;
+$font__code: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+$font__pre: "Courier 10 Pitch", Courier, monospace;
+$font__line-height-body: 1.5;
+$font__line-height-pre: 1.6;
+$color__text-main: #585858;
+
+@font-face {
+  font-family: 'FuturaNew';
+  font-weight: 300;
+  font-style: normal;
+  src: url(../fonts/FTN45.eot);
+  src: url(../fonts/FTN45.eot#iefix../) format("embedded-opentype"), url(../fonts/FTN45.woff) format("woff"), url(../fonts/FTN45.ttf) format("truetype"), url(../fonts/FTN45.svg#FuturaNew) format("svg");
+}
+
+
+@font-face {
+  font-family: 'FuturaNew';
+  font-weight: normal;
+  font-style: normal;
+  src: url(../fonts/FTN65.eot);
+  src: url(../fonts/FTN65.eot#iefix../) format("embedded-opentype"), url(../fonts/FTN65.woff) format("woff"), url(../fonts/FTN65.ttf) format("truetype"), url(../fonts/FTN65.svg#FuturaNew) format("svg");
+}
+
+
+@font-face {
+  font-family: 'FuturaNew';
+  font-weight: 700;
+  font-style: normal;
+  src: url(../fonts/FTN85.eot);
+  src: url(../fonts/FTN85.eot#iefix../) format("embedded-opentype"), url(../fonts/FTN85.woff) format("woff"), url(../fonts/FTN85.ttf) format("truetype"), url(../fonts/FTN85.svg#FuturaNew) format("svg");
+}
+
+
+@font-face {
+  font-family: 'ProximaNova';
+  font-weight: normal;
+  font-style: normal;
+  src: url(../fonts/ProximaNova-Regular.eot);
+  src: url(../fonts/ProximaNova-Regular.eot#iefix../) format("embedded-opentype"), url(../fonts/ProximaNova-Regular.woff) format("woff"), url(../fonts/ProximaNova-Regular.ttf) format("truetype"), url(../fonts/ProximaNova-Regular.svg#FuturaNew) format("svg");
+}
+
+
+@font-face {
+  font-family: 'ProximaNova';
+  font-weight: 600;
+  font-style: normal;
+  src: url(../fonts/ProximaNova-Semibold.eot);
+  src: url(../fonts/ProximaNova-Semibold.eot#iefix../) format("embedded-opentype"), url(../fonts/ProximaNova-Semibold.woff) format("woff"), url(../fonts/ProximaNova-Semibold.ttf) format("truetype"), url(../fonts/ProximaNova-Semibold.svg#FuturaNew) format("svg");
+}
+
+
+@font-face {
+  font-family: 'ProximaNova';
+  font-weight: 700;
+  font-style: normal;
+  src: url(../fonts/ProximaNova-Black.eot);
+  src: url(../fonts/ProximaNova-Black.eot#iefix../) format("embedded-opentype"), url(../fonts/ProximaNova-Black.woff) format("woff"), url(../fonts/ProximaNova-Black.ttf) format("truetype"), url(../fonts/ProximaNova-Black.svg#FuturaNew) format("svg");
+}
+
+
 body,
 button,
 input,
 select,
 textarea {
-	color: $color__text-main;
-	font-family: $font__main;
-	@include font-size(1.6);
-	line-height: $font__line-height-body;
+  color: $color__text-main;
+  font-family: $font__sub;
+  @include font-size(1.6);
+  font-weight: 300;
+  line-height: $font__line-height-body;
 }
 
 @import "headings";
-
 @import "copy";
+@import "icomoon";
+
+// @import "test";

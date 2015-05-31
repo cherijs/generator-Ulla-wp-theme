@@ -1,0 +1,42 @@
+@import "compass/css3";
+@import "compass/utilities";
+@import "vars";
+@import "mixins/mixins-master";
+@import "media_queries/media_queries";
+@import "reset";
+@import "typography/typography";
+@import "header_block";
+
+* {
+  @include box-sizing(border-box);
+}
+
+.clear {
+  clear: both;
+}
+
+.clearfix {
+  @include clearfix;
+}
+
+.table {
+  display: table;
+  .middle {
+    height: 100%;
+    display: table-cell;
+    vertical-align: middle;
+  }
+}
+
+// @import "forms/forms";
+
+// @import "modules/accessibility";
+// @import "modules/alignments";
+// @import "modules/clearings";
+// @import "modules/infinite-scroll";
+
+// @import "global";
+
+div {
+  // border: dotted 1px #c8c8c8;
+}

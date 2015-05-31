@@ -10,8 +10,8 @@ module.exports = function(grunt) {
         //watch
         watch: {
             bower: {
-                files: ['bower.json'],
-                tasks: ['bowerInstall']
+                // files: ['bower.json'],
+                // tasks: ['bowerInstall']
             },
             gruntfile: {
                 files: ['Gruntfile.js']
@@ -32,7 +32,7 @@ module.exports = function(grunt) {
 
             js: {
                 files: '../src/js/**/*.js',
-                tasks: ['copy:js'],
+                tasks: ['copy:js', 'min'],
                 options: {
                     livereload: true,
                 },
@@ -128,30 +128,30 @@ module.exports = function(grunt) {
 
 
         // Automatically inject Bower components into the HTML file
-        bowerInstall: {
-            php: {
-                src: ['../../{,*/}*.php'],
-                exclude: ['bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap.js', 'bower_components/modernizr/modernizr.js', 'jquery.js'],
-                fileTypes: {
-                    html: {
-                        replace: {
-                            js: '<script src="/wp-content/themes/<%= site_nameSpace %>/{{filePath}}"></script>'
-                        }
-                    }
-                }
-            },
+        // bowerInstall: {
+        //     php: {
+        //         src: ['../../{,*/}*.php'],
+        //         exclude: ['bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap.js', 'bower_components/modernizr/modernizr.js', 'jquery.js'],
+        //         fileTypes: {
+        //             html: {
+        //                 replace: {
+        //                     js: '<script src="/wp-content/themes/<%= site_nameSpace %>/{{filePath}}"></script>'
+        //                 }
+        //             }
+        //         }
+        //     },
 
-            scss: {
-                src: ['../src/scss/{,*/}*.{scss,sass}'],
-                fileTypes: {
-                    html: {
-                        replace: {
-                            css: '<link rel="stylesheet" href="/wp-content/themes/<%= site_nameSpace %>/{{filePath}}" type="text/css" media="all">'
-                        }
-                    }
-                }
-            }
-        },
+        //     scss: {
+        //         src: ['../src/scss/{,*/}*.{scss,sass}'],
+        //         fileTypes: {
+        //             html: {
+        //                 replace: {
+        //                     css: '<link rel="stylesheet" href="/wp-content/themes/<%= site_nameSpace %>/{{filePath}}" type="text/css" media="all">'
+        //                 }
+        //             }
+        //         }
+        //     }
+        // },
 
         //notify
         notify: {
@@ -273,12 +273,15 @@ module.exports = function(grunt) {
             production: {
                 // files: [{
                 expand: true,
+                flatten: true,
                 cwd: '../../',
-                dest: '.tmp',
+                dest: '../../production/',
                 src: [
-                    '**/footer.php',
-                    '**/header.php',
-                    '!**/production/**'
+                    // '**/static/**/*',
+                    'footer.php',
+                    'header.php',
+                    '!**/production/**',
+                    '!**/dev/**'
                 ]
                 // }]
             }
@@ -302,15 +305,17 @@ module.exports = function(grunt) {
         // concat, minify and revision files. Creates configurations in memory so
         // additional tasks can operate on them
         useminPrepare: {
-            // options: {
-            //     dest: '../../production'
-            // },
-            html: ['.tmp/header.php', '.tmp/footer.php']
+            options: {
+                root: '../../../../../',
+                dest: '../../../../../',
+
+            },
+            html: ['../../header.php', '../../footer.php']
         },
 
         // Performs rewrites based on rev and the useminPrepare configuration
         usemin: {
-            html: ['.tmp/header.php', '.tmp/footer.php']
+            html: ['../../production/header.php', '../../production/footer.php']
         },
 
         //Image min
@@ -357,8 +362,9 @@ module.exports = function(grunt) {
         var browserSync = require('browser-sync');
         bs = browserSync.init([
             '../../static/css/**/*.css',
-            '../../static/js/**/*.js',
-            '../../**/*.php'
+            '../../static/js/app.min.js',
+            // '../../static/js/**/*.js',
+            '../../*.php'
         ], {
             logLevel: 'info',
             notify: true,
@@ -396,6 +402,8 @@ module.exports = function(grunt) {
     grunt.registerTask('prepFonts', ['copy:fonts']);
     grunt.registerTask('browser', ['browserSync', 'watch']);
     grunt.registerTask('copyHeadFooter', ['copy:production', 'useminPrepare', 'usemin']);
+    grunt.registerTask('min', ['clean', 'useminPrepare', 'concat', 'uglify', 'autoprefixer', 'cssmin', 'usemin']);
+    grunt.registerTask('minify', ['clean', 'useminPrepare', 'concat', 'uglify', 'autoprefixer', 'cssmin', 'copy:production', 'usemin']);
 
 
     //RUN ON START
