@@ -40,37 +40,40 @@
 
 
 
-        $('a[href^="http://localhost:3000/"]').each(function () {
-            var a = $(this);
-            a.attr("data-push", "true");
-            a.attr("data-target", "#wrapper");
-        });
-
-        window.wiselinks = new Wiselinks($('#wrapper'));
-
-        $(document).off('page:loading').on('page:loading', function (event, $target, render, url) {
-            console.log("Loading: #{url} to #{$target.selector} within '#{render}'"); // # code to start loading animation
-        });
-
-        $(document).off('page:redirected').on('page:redirected', function (event, $target, render, url) {
-            console.log("Redirected to: #{url}"); // # code to start loading animation
-        });
-
-        $(document).off('page:always').on('page:always', function (event, xhr, settings) {
-            console.log("Wiselinks page loading completed"); // # code to stop loading animation
-        });
-
-
-        $(document).off('page:done').on('page:done', function (event, $target, status, url, data) {
-            console.log("Wiselinks status: '#{status}'");
-
+        function makeWiselinks() {
             $('a[href^="http://localhost:3000/"]').each(function () {
                 var a = $(this);
                 a.attr("data-push", "true");
                 a.attr("data-target", "#wrapper");
             });
+        }
+        makeWiselinks();
+
+        window.wiselinks = new Wiselinks($('#wrapper'));
+
+        $(document).off('page:loading').on('page:loading', function (event, $target, render, url) {
+            console.log("Loading: #{url} to #{$target.selector} within '#{render}'"); // # code to start loading animation
+            $('body').addClass('loading');
+
+        });
+
+        $(document).off('page:redirected').on('page:redirected', function (event, $target, render, url) {
+            console.log("Redirected to: #{url}"); // # code to start loading animation
+            $('body').addClass('loading');
+        });
+
+        $(document).off('page:always').on('page:always', function (event, xhr, settings) {
+            console.log("Wiselinks page loading completed"); // # code to stop loading animation
+            $('body').removeClass('loading');
+
+        });
 
 
+        $(document).off('page:done').on('page:done', function (event, $target, status, url, data) {
+            console.log("Wiselinks status: '#{status}'");
+            $('body').removeClass('loading');
+            makeWiselinks();
+            _gaq.push(['_trackPageview', url]);
         });
 
         $(document).off('page:fail').on('page:fail', function (event, $target, status, url, error, code) {
