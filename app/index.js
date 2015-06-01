@@ -6,15 +6,15 @@ var chalk = require('chalk');
 
 
 var StartWPSiteGenerator = yeoman.generators.Base.extend({
-    init: function() {
+    init: function () {
         this.pkg = require('../package.json');
 
-        this.on('end', function() {
+        this.on('end', function () {
             process.chdir(this.themeNameSpace + "/dev/tasks");
 
             var that = this;
             if (!this.options['skip-install']) {
-                this.installDependencies(function() {
+                this.installDependencies(function () {
                     console.log('Everything is ready!');
                     //Init the project with Grunt to move the last files into place
                     that.spawnCommand('grunt', ['init']);
@@ -25,7 +25,7 @@ var StartWPSiteGenerator = yeoman.generators.Base.extend({
         });
     },
 
-    askFor: function() {
+    askFor: function () {
         var done = this.async();
 
         // have Yeoman greet the user
@@ -39,7 +39,7 @@ var StartWPSiteGenerator = yeoman.generators.Base.extend({
             {
                 name: 'themeName',
                 message: 'What do you want to call your theme?',
-                default: function(answers) {
+                default: function (answers) {
                     return 'LoveUlla'
                 }
 
@@ -49,7 +49,7 @@ var StartWPSiteGenerator = yeoman.generators.Base.extend({
             , {
                 name: 'themeNameSpace',
                 message: 'Unique name-space for the project (alphanumeric)?',
-                default: function(answers) {
+                default: function (answers) {
                     return answers.themeName.replace(/\W/g, '').toLowerCase();
                 }
             }
@@ -58,7 +58,7 @@ var StartWPSiteGenerator = yeoman.generators.Base.extend({
             , {
                 name: 'themeAuthor',
                 message: 'Name of the themes author?',
-                default: function(answers) {
+                default: function (answers) {
                     return 'cherijs';
                 }
             }
@@ -67,7 +67,7 @@ var StartWPSiteGenerator = yeoman.generators.Base.extend({
             , {
                 name: 'themeAuthorURI',
                 message: 'Website of the themes authors?',
-                default: function(answers) {
+                default: function (answers) {
                     return 'http://' + answers.themeAuthor.replace(/\W/g, '').toLowerCase() + '.com';
                 }
             }
@@ -76,7 +76,7 @@ var StartWPSiteGenerator = yeoman.generators.Base.extend({
             , {
                 name: 'themeURI',
                 message: 'Website of the theme?',
-                default: function(answers) {
+                default: function (answers) {
                     return answers.themeAuthorURI + '/' + answers.themeNameSpace;
                 }
             }
@@ -91,7 +91,7 @@ var StartWPSiteGenerator = yeoman.generators.Base.extend({
             , {
                 name: 'themeDescription',
                 message: 'Description of the theme?',
-                default: function(answers) {
+                default: function (answers) {
                     return 'This is a description for the ' + answers.themeName + ' theme.';
                 }
             }
@@ -99,14 +99,14 @@ var StartWPSiteGenerator = yeoman.generators.Base.extend({
             , {
                 name: 'themedevUrl',
                 message: 'Production server addres ex: ulla.dev',
-                default: function(answers) {
+                default: function (answers) {
                     return answers.themeNameSpace + '.dev';
                 }
             }
 
         ]; //end prompts
 
-        this.prompt(prompts, function(props) {
+        this.prompt(prompts, function (props) {
             this.themeName = props.themeName;
             this.themeNameSpace = props.themeNameSpace;
             this.themedevUrl = props.themedevUrl;
@@ -121,7 +121,7 @@ var StartWPSiteGenerator = yeoman.generators.Base.extend({
         }.bind(this));
     },
 
-    app: function() {
+    app: function () {
         var context = {
 
             themeName: this.themeName,
@@ -190,6 +190,11 @@ var StartWPSiteGenerator = yeoman.generators.Base.extend({
 
 
 
+        this.template('blank-theme/footer.php', this.themeNameSpace + '/footer.php', context);
+        this.template('blank-theme/header.php', this.themeNameSpace + '/header.php', context);
+
+
+
 
 
 
@@ -209,7 +214,7 @@ var StartWPSiteGenerator = yeoman.generators.Base.extend({
 
     },
 
-    projectfiles: function() {
+    projectfiles: function () {
         this.copy('editorconfig', this.themeNameSpace + '/.editorconfig');
         this.copy('jshintrc', this.themeNameSpace + '/.jshintrc');
     }
