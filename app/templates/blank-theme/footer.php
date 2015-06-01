@@ -19,14 +19,12 @@
       <!-- build:js /wp-content/themes/<%= site_nameSpace %>/static/js/app.min.js -->
       <!-- put all your js files here  -->
       <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/static/js/modernizr.js'></script>
-      
       <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/static/js/jquery.js'></script>
-
       <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/static/js/libs/html5shiv.min.js'></script>
+      <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/static/js/libs/wiselinks-1.2.2.min.js'></script>
+
 
       <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/static/js/footer.js'></script>
-
-
       <!-- endbuild -->
 
 

@@ -4,12 +4,12 @@
 
 
 
-(function($, window, document, undefined) {
+(function ($, window, document, undefined) {
     'use strict';
     //------------------------  CONSOLE FIX
     // Avoid `console` errors in browsers that lack a console.
     var method;
-    var noop = function() {};
+    var noop = function () {};
     var methods = [
         'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
         'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
@@ -29,75 +29,54 @@
 
 
 
-    $.extend($.lazyLoadXT, {
-        autoInit: true,
-        edgeY: 600,
-        srcAttr: 'data-src'
-    });
-
-
-
-
-
-    $(function() {
+    $(function () {
         // JQUERY READY, MY FUNCTIONS HERE
         console.log('Website ready!!!');
         if (!Modernizr.csstransitions || !Modernizr.cssanimations || !Modernizr.svg) {
             // $('#warning').addClass('active');
         }
 
+        // prieksh wiselinks
 
-        var h = $(window).height();
-        var body = $("html, body");
-        var keys = [37, 38, 39, 40];
 
-        function preventDefault(e) {
-            e = e || window.event;
-            if (e.preventDefault)
-                e.preventDefault();
-            e.returnValue = false;
-        }
 
-        function keydown(e) {
-            for (var i = keys.length; i--;) {
-                if (e.keyCode === keys[i]) {
-                    preventDefault(e);
-                    return;
-                }
-            }
-        }
-
-        function wheel(e) {
-            preventDefault(e);
-        }
-
-        function disable_scroll() {
-            if (window.addEventListener) {
-                window.addEventListener('DOMMouseScroll', wheel, false);
-            }
-            window.onmousewheel = document.onmousewheel = wheel;
-            document.onkeydown = keydown;
-        }
-
-        function enable_scroll() {
-            if (window.removeEventListener) {
-                window.removeEventListener('DOMMouseScroll', wheel, false);
-            }
-            window.onmousewheel = document.onmousewheel = document.onkeydown = null;
-        }
-
-        // noblokjejam visur
-        document.addEventListener('touchmove', function(event) {
-            //event.preventDefault();
+        $('a[href^="http://localhost:3000/"]').each(function () {
+            var a = $(this);
+            a.attr("data-push", "true");
+            a.attr("data-target", "#wrapper");
         });
-        // atljaujam sheit
-        // var scrollingDiv = document.getElementById('nav');
-        // $('#nav-wraper')[0].addEventListener('touchmove', function (event) {
-        //     event.stopPropagation();
-        // });
+
+        window.wiselinks = new Wiselinks($('#wrapper'));
+
+        $(document).off('page:loading').on('page:loading', function (event, $target, render, url) {
+            console.log("Loading: #{url} to #{$target.selector} within '#{render}'"); // # code to start loading animation
+        });
+
+        $(document).off('page:redirected').on('page:redirected', function (event, $target, render, url) {
+            console.log("Redirected to: #{url}"); // # code to start loading animation
+        });
+
+        $(document).off('page:always').on('page:always', function (event, xhr, settings) {
+            console.log("Wiselinks page loading completed"); // # code to stop loading animation
+        });
 
 
+        $(document).off('page:done').on('page:done', function (event, $target, status, url, data) {
+            console.log("Wiselinks status: '#{status}'");
 
+            $('a[href^="http://localhost:3000/"]').each(function () {
+                var a = $(this);
+                a.attr("data-push", "true");
+                a.attr("data-target", "#wrapper");
+            });
+
+
+        });
+
+        $(document).off('page:fail').on('page:fail', function (event, $target, status, url, error, code) {
+            console.log("Wiselinks status: '#{status}'");
+
+        });
 
 
     });

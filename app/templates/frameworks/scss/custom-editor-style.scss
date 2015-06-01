@@ -5,7 +5,6 @@
 @import "media_queries/media_queries";
 @import "reset";
 @import "typography/typography";
-@import "header_block";
 
 * {
   @include box-sizing(border-box);

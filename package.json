@@ -1,6 +1,6 @@
 {
     "name": "generator-ulla-wp-theme",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "description": "A starting point for developing Wordpress themes",
     "keywords": [
         "yeoman-generator",
