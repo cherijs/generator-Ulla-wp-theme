@@ -1,6 +1,6 @@
 /* Generated for <%= site_name %> */
 'use strict';
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
@@ -356,22 +356,29 @@ module.exports = function(grunt) {
 
 
 
-    // Start BrowserSync via the API
+    // Start BrowserSync via the API  <%= site_devUrl %>
     var bs;
-    grunt.registerTask('bs-start', function() {
-        var browserSync = require('browser-sync');
-        bs = browserSync.init([
-            '../../static/css/**/*.css',
-            '../../static/js/app.min.js',
-            // '../../static/js/**/*.js',
-            '../../*.php'
-        ], {
+    grunt.registerTask('bs-start', function () {
+
+
+        var browserSync = require('browser-sync').create();
+
+        var config = {
             logLevel: 'info',
             notify: true,
             reloadDelay: 1000,
             injectChanges: true,
             debugInfo: true,
-            proxy: '<%= site_devUrl %>',
+            open: true,
+            proxy: {
+                target: "<%= site_devUrl %>",
+                middleware: function (req, res, next) {
+                    console.log(req.url);
+                    next();
+                }
+            },
+            https: false,
+            // proxy: 'http://augiienakpilseta.dev',
             browser: ["google chrome canary"],
             watchTask: true, // < VERY important
             ghostMode: {
@@ -380,12 +387,33 @@ module.exports = function(grunt) {
                 links: true,
                 forms: true,
                 scroll: true
-            }
+            },
+            rewriteRules: [{
+                match: /\/\/localhost/g,
+                fn: function (match) {
+                    return 'http://localhost';
+                }
+            }]
+        };
+
+
+        bs = browserSync.init(config, function (err, bs) {
+            // Full access to Browsersync object here
+            console.log(bs.getOption("urls"));
+
+            // var url = bs.getOption("urls").local.replace(':3001', ':3002');
+            // require('opn')(url);
+            // console.log('Started browserSync on ' + url);
+
+
         });
+
+
+
     });
 
     // Fire file-change events manually for greater control
-    grunt.registerTask('bs-reload', function() {
+    grunt.registerTask('bs-reload', function () {
         bs.events.emit('file:changed', {
             path: '../../static/css/style.css'
         });
