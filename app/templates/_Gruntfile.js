@@ -22,16 +22,16 @@ module.exports = function (grunt) {
                 files: '../../*.php',
                 tasks: ['bsReload:all']
             },
-            // images: {
-            //     files: '../src/images/**/*.{png,jpg,gif,svg}',
-            //     tasks: ['copy:images', 'bsReload:all'],
+            images: {
+                files: '../src/images/*.{png,jpg,gif,svg}',
+                tasks: ['copy:images', 'bsReload:all'],
 
-            // },
-            // fonts: {
-            //     files: '../src/fonts/**/*',
-            //     tasks: ['copy:fonts', 'bsReload:all'],
+            },
+            fonts: {
+                files: '../src/fonts/*',
+                tasks: ['copy:fonts', 'bsReload:all'],
 
-            // },
+            },
         },
 
         compass: {
@@ -307,8 +307,8 @@ module.exports = function (grunt) {
     grunt.registerTask('prepFonts', ['copy:fonts']);
     grunt.registerTask('browser', ['browserSync', 'watch']);
     grunt.registerTask('copyHeadFooter', ['copy:production', 'useminPrepare', 'usemin']);
-    grunt.registerTask('min', ['clean', 'useminPrepare', 'concat', 'uglify', 'autoprefixer', 'cssmin', 'usemin']);
-    grunt.registerTask('minify', ['clean', 'useminPrepare', 'concat', 'uglify', 'autoprefixer', 'cssmin', 'copy:production', 'usemin']);
+    grunt.registerTask('min', ['clean', 'useminPrepare', 'concat', 'uglify', 'autoprefixer', 'cssmin', 'usemin', 'clean']);
+    grunt.registerTask('minify', ['clean', 'useminPrepare', 'concat', 'uglify', 'autoprefixer', 'cssmin', 'copy:production', 'usemin', 'clean']);
 
 
     //RUN ON START

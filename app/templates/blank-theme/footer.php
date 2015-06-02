@@ -23,31 +23,35 @@
     /*
 
       
-      <!-- build:js /wp-content/themes/<%= site_nameSpace %>/static/js/app.min.js -->
-      <!-- put all your js files here  -->
-      <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/static/js/modernizr.js'></script>
-      <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/static/js/jquery.js'></script>
-      <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/static/js/libs/html5shiv.min.js'></script>
-      <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/static/js/libs/wiselinks-1.2.2.min.js'></script>
+      <!-- build:js /wp-content/themes/<%= site_nameSpace %>/static/js/libs.min.js -->
+      <!-- put all your js libs files here  -->
+      <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/dev/src/js/modernizr.js'></script>
+      <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/dev/src/js/jquery.js'></script>
+      <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/dev/src/js/libs/html5shiv.min.js'></script>
+      <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/dev/src/js/libs/wiselinks-1.2.2.min.js'></script>
 
+      <!-- endbuild -->
 
-      <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/static/js/footer.js'></script>
+      <!-- build:js /wp-content/themes/<%= site_nameSpace %>/static/js/<%= site_nameSpace %>.min.js -->
+      <!-- put your js files here  -->
+      <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/dev/src/js/<%= site_nameSpace %>.js'></script>
+
       <!-- endbuild -->
 
 
+
+
+      <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/static/js/footer.js'></script>
       <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/static/js/libs/jquery.magnific-popup.min.js'></script>
       <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/static/js/libs/fotorama.js'></script>
       <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/static/js/libs/fotorama-wp.js'></script>
       <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/static/js/libs/swiper.js'></script>
       <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/static/js/libs/soundmanager2-nodebug-jsmin.js'></script>
       <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/static/js/libs/mp3-player-button.js'></script>
-
       <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/static/js/libs/ScrollMagic.js'></script>
       <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/static/js/libs/TweenMax.min.js'></script>
       <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/static/js/libs/animation.gsap.js'></script>
-
       <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/static/js/libs/SmoothScroll.js'></script>
-
       <script type='text/javascript' src='/wp-includes/js/jquery/ui/datepicker.min.js'></script>
       <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/static/js/libs/datepicker-ru.js'></script>
       <script type='text/javascript' src='/wp-content/themes/<%= site_nameSpace %>/static/js/libs/datepicker-lv.js' ></script>
