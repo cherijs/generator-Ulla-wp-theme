@@ -14,27 +14,13 @@
 	// Theme Setup (based on twentythirteen: http://make.wordpress.org/core/tag/twentythirteen/)
 	function <%= themeNameSpace %>_setup() {
 		load_theme_textdomain( '<%= themeNameSpace %>', get_template_directory() . '/languages' );
-		add_theme_support( 'automatic-feed-links' );
-		add_theme_support( 'structured-post-formats', array( 'link', 'video' ) );
-		add_theme_support( 'post-formats', array( 'aside', 'audio', 'chat', 'gallery', 'image', 'quote', 'status' ) );
+		// add_theme_support( 'automatic-feed-links' );
+		// add_theme_support( 'structured-post-formats', array( 'link', 'video' ) );
+		// add_theme_support( 'post-formats', array( 'aside', 'audio', 'chat', 'gallery', 'image', 'quote', 'status' ) );
 		register_nav_menu( 'primary', __( 'Navigation Menu', '<%= themeNameSpace %>' ) );
 		add_theme_support( 'post-thumbnails' );
 	}
-	add_action( 'after_setup_theme', '<%= themeNameSpace %>_setup' );
-
-	// Scripts & Styles (based on twentythirteen: http://make.wordpress.org/core/tag/twentythirteen/)
-	/**
- 	* Enqueue <%= themeNameSpace %> scripts
- 	* @return void
- 	*/
-	// Load jQuery
-	if ( !is_admin() ) {
-	   // wp_deregister_script('jquery');
-	   // wp_register_script('jquery', ("http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"), false);
-	   // wp_enqueue_script('jquery');
-	}
-
-	    
+	add_action( 'after_setup_theme', '<%= themeNameSpace %>_setup' );   
 
 
 	function <%= themeNameSpace %>_enqueue_scripts() {
@@ -59,6 +45,22 @@
 	remove_action( 'wp_print_styles', 'print_emoji_styles' );
 	remove_action( 'admin_print_styles', 'print_emoji_styles' );
 
+
+	remove_action( 'wp_head', 'feed_links_extra', 3 ); // Display the links to the extra feeds such as category feeds
+	remove_action( 'wp_head', 'feed_links', 2 ); // Display the links to the general feeds: Post and Comment Feed
+	remove_action( 'wp_head', 'rsd_link' ); // Display the link to the Really Simple Discovery service endpoint, EditURI link
+	remove_action( 'wp_head', 'wlwmanifest_link' ); // Display the link to the Windows Live Writer manifest file.
+	remove_action( 'wp_head', 'index_rel_link' ); // index link
+	remove_action( 'wp_head', 'parent_post_rel_link', 10, 0 ); // prev link
+	remove_action( 'wp_head', 'start_post_rel_link', 10, 0 ); // start link
+	remove_action( 'wp_head', 'adjacent_posts_rel_link', 10, 0 ); // Display relational links for the posts adjacent to the current post.
+	remove_action( 'wp_head', 'wp_generator' ); // Display the XHTML generator that is generated on the wp_head hook, WP version
+
+	function <%= themeNameSpace %>_remove_recent_comments_style() {  
+	        global $wp_widget_factory;  
+	        remove_action( 'wp_head', array( $wp_widget_factory->widgets['WP_Widget_Recent_Comments'], 'recent_comments_style' ) );  
+	    }  
+	add_action( 'widgets_init', '<%= themeNameSpace %>_remove_recent_comments_style' );
 
 
 	if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
@@ -310,25 +312,6 @@
 		add_action( 'widgets_init', '<%= themeNameSpace %>_widgets_init' );
 	}
 
-	// Navigation - update coming from twentythirteen
-	function post_navigation() {
-		echo '<div class="navigation">';
-		echo '	<div class="next-posts">'.get_next_posts_link('&laquo; Older Entries').'</div>';
-		echo '	<div class="prev-posts">'.get_previous_posts_link('Newer Entries &raquo;').'</div>';
-		echo '</div>';
-	}
-
-	// Posted On
-	function posted_on() {
-		printf( __( '<span class="sep">Posted </span><a href="%1$s" title="%2$s" rel="bookmark"><time class="entry-date" datetime="%3$s" pubdate>%4$s</time></a> by <span class="byline author vcard">%5$s</span>', '' ),
-			esc_url( get_permalink() ),
-			esc_attr( get_the_time() ),
-			esc_attr( get_the_date( 'c' ) ),
-			esc_html( get_the_date() ),
-			esc_attr( get_the_author() )
-		);
-	}
-
 
 
 add_filter('show_admin_bar', '__return_false');
@@ -362,7 +345,7 @@ function the_excerpt_max_charlength($charlength, $echo=true) {
 
 
 
-
+/*
 add_shortcode('gallery', 'fotorama_gallery_shortcode');
 add_shortcode('fotorama', 'fotorama_gallery_shortcode');
 
@@ -439,7 +422,7 @@ function fotorama_gallery_shortcode($atts)
     return "<div data-nav='thumbs' data-allowfullscreen='true' data-fit='scaledown' data-auto='false'  class='fotorama hidden fotorama--wp' $data>$gallery</div>";
 }
 
-
+*/
 
 /* Uncomment to add custom image sizes
 

@@ -1,65 +1,38 @@
 /* Generated for <%= site_name %> */
-'use strict';
+
 module.exports = function (grunt) {
 
-    require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
-
+    // Project configuration.
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
-
-        //watch
         watch: {
-            // bower: {
-            //     files: ['bower.json'],
-            //     tasks: ['bowerInstall']
-            // },
-            gruntfile: {
-                files: ['Gruntfile.js']
+            options: {
+                spawn: false // Important, don't remove this!
             },
-            // scss: {
-            //     files: '../src/scss/**/*.scss',
-            //     tasks: ['sass:dev', 'autoprefixer', 'notify:sassDone'],
-            //     // tasks: ['sass:dev', 'autoprefixer', 'notify:sassDone'],
-            //     options: {
-            //         livereload: true,
-            //     },
-            // },
-
             compass: {
                 files: ['../src/scss/**/*.{scss,sass}'],
-                tasks: ['compass', 'autoprefixer', 'notify:sassDone']
+                tasks: ['compass', 'autoprefixer', 'bsReload:css']
+                //tasks: ['compass', 'autoprefixer', 'bsReload:css']
             },
 
             js: {
                 files: '../src/js/**/*.js',
-                tasks: ['copy:js', 'min'],
-                options: {
-                    livereload: true,
-                },
+                tasks: ['copy:js', 'min', 'bsReload:all']
             },
             php: {
-                files: '../../**/*.php',
-                options: {
-                    livereload: true,
-                },
+                files: '../../*.php',
+                tasks: ['bsReload:all']
             },
-            images: {
-                files: '../src/images/**/*.{png,jpg,gif,svg}',
-                tasks: ['copy:images'],
-                options: {
-                    livereload: true,
-                },
-            },
-            fonts: {
-                files: '../src/fonts/**/*',
-                tasks: ['copy:fonts'],
-                options: {
-                    livereload: true,
-                },
-            },
-        },
-        // end watch
+            // images: {
+            //     files: '../src/images/**/*.{png,jpg,gif,svg}',
+            //     tasks: ['copy:images', 'bsReload:all'],
 
+            // },
+            // fonts: {
+            //     files: '../src/fonts/**/*',
+            //     tasks: ['copy:fonts', 'bsReload:all'],
+
+            // },
+        },
 
         compass: {
             dist: {
@@ -77,29 +50,15 @@ module.exports = function (grunt) {
             }
         },
 
-        //sass
-        sass: { // Task
-            dev: { // Target
-                options: { // Target options
-                    style: 'expanded',
-                    //sourcemap: true,
-                },
-                files: { // Dictionary of files
-                    '../../static/css/style.css': '../src/scss/style.scss'
-                }
-            },
-            dist: { // Target
-                options: { // Target options
-                    style: 'expanded',
-                },
-                files: { // Dictionary of files
-                    '../../static/css/style.css': '../src/scss/style.scss'
+        sass: {
+            dev: {
+                files: {
+                    "../../static/css/style.css": "../src/scss/style.scss"
                 }
             }
         },
-        // end sass
 
-        //auto prefixer
+
         autoprefixer: {
             options: {
                 browsers: ['last 3 version', 'ie 8', 'ie 9']
@@ -112,8 +71,8 @@ module.exports = function (grunt) {
                 dest: '../../static/css/style.css'
             }
         },
-        //end auto prefixer
-        //css min
+
+
         cssmin: {
             minify: {
                 expand: true,
@@ -124,36 +83,7 @@ module.exports = function (grunt) {
                 report: 'gzip'
             }
         },
-        // end ccs min
 
-
-        // Automatically inject Bower components into the HTML file
-        // bowerInstall: {
-        //     php: {
-        //         src: ['../../{,*/}*.php'],
-        //         exclude: ['bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap.js', 'bower_components/modernizr/modernizr.js', 'jquery.js'],
-        //         fileTypes: {
-        //             html: {
-        //                 replace: {
-        //                     js: '<script src="/wp-content/themes/<%= site_nameSpace %>/{{filePath}}"></script>'
-        //                 }
-        //             }
-        //         }
-        //     },
-
-        //     scss: {
-        //         src: ['../src/scss/{,*/}*.{scss,sass}'],
-        //         fileTypes: {
-        //             html: {
-        //                 replace: {
-        //                     css: '<link rel="stylesheet" href="/wp-content/themes/<%= site_nameSpace %>/{{filePath}}" type="text/css" media="all">'
-        //                 }
-        //             }
-        //         }
-        //     }
-        // },
-
-        //notify
         notify: {
             done: {
                 options: {
@@ -192,22 +122,7 @@ module.exports = function (grunt) {
                 }
             },
         },
-        //endnotify
-        //Bower copy
-        bowercopy: {
-            libs: {
-                options: {
-                    destPrefix: '../../static/js/libs'
-                },
-                files: {
-                    // 'modernizr.js': 'modernizr/modernizr.js',
-                    'jquery.js': 'jquery/dist/jquery.min.js',
-                }
-            }
-        },
 
-        // Generates a custom Modernizr build that includes only the tests you
-        // reference in your app
         modernizr: {
             dist: {
                 devFile: '../bower_components/modernizr/modernizr.js',
@@ -230,9 +145,6 @@ module.exports = function (grunt) {
             }
         },
 
-
-        //end Bower copy
-        //copy
         copy: {
             js: {
                 files: [
@@ -286,9 +198,7 @@ module.exports = function (grunt) {
                 // }]
             }
         },
-        //end copy
 
-        // Empties folders to start fresh
         clean: {
             dist: {
                 files: [{
@@ -301,9 +211,7 @@ module.exports = function (grunt) {
             // ,server: '.tmp'
         },
 
-        // Reads HTML for usemin blocks to enable smart builds that automatically
-        // concat, minify and revision files. Creates configurations in memory so
-        // additional tasks can operate on them
+
         useminPrepare: {
             options: {
                 root: '../../../../../',
@@ -348,80 +256,49 @@ module.exports = function (grunt) {
 
                 ]
             }
+        },
+
+        browserSync: {
+            default_options: {
+                bsFiles: {
+                    src: [
+                        "../../static/css/style.css"
+                    ]
+                },
+                options: {
+                    browser: ["google chrome canary"],
+                    watchTask: true,
+                    proxy: "<%= site_devUrl %>",
+                    rewriteRules: [{
+                        match: /\/\/localhost/g,
+                        fn: function (match) {
+                            return 'http://localhost';
+                        }
+                    }]
+                }
+            }
+        },
+        bsReload: {
+            css: {
+                reload: "../../static/css/style.css"
+            },
+            all: {
+                reload: true
+            }
         }
-        // end make a zipfile
-
-
-    }); //end grunt package configs
-
-
-
-    // Start BrowserSync via the API  <%= site_devUrl %>
-    var bs;
-    grunt.registerTask('bs-start', function () {
-
-
-        var browserSync = require('browser-sync').create();
-
-        var config = {
-            logLevel: 'info',
-            notify: true,
-            reloadDelay: 1000,
-            injectChanges: true,
-            debugInfo: true,
-            open: true,
-            proxy: {
-                target: "<%= site_devUrl %>",
-                middleware: function (req, res, next) {
-                    console.log(req.url);
-                    next();
-                }
-            },
-            https: false,
-            // proxy: 'http://augiienakpilseta.dev',
-            browser: ["google chrome canary"],
-            watchTask: true, // < VERY important
-            ghostMode: {
-                clicks: true,
-                location: true,
-                links: true,
-                forms: true,
-                scroll: true
-            },
-            rewriteRules: [{
-                match: /\/\/localhost/g,
-                fn: function (match) {
-                    return 'http://localhost';
-                }
-            }]
-        };
-
-
-        bs = browserSync.init(config, function (err, bs) {
-            // Full access to Browsersync object here
-            console.log(bs.getOption("urls"));
-
-            // var url = bs.getOption("urls").local.replace(':3001', ':3002');
-            // require('opn')(url);
-            // console.log('Started browserSync on ' + url);
-
-
-        });
-
-
-
     });
 
-    // Fire file-change events manually for greater control
-    grunt.registerTask('bs-reload', function () {
-        bs.events.emit('file:changed', {
-            path: '../../static/css/style.css'
-        });
-
-    });
-
-
-
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-compass');
+    grunt.loadNpmTasks('grunt-autoprefixer');
+    grunt.loadNpmTasks('grunt-browser-sync');
+    grunt.loadNpmTasks('grunt-notify');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-usemin');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 
     //Asset pipelines
     grunt.registerTask('prepJS', ['copy:js']);
@@ -440,9 +317,6 @@ module.exports = function (grunt) {
     //RUN FOR PRODUCTION 
     grunt.registerTask('prod', ['notify:distStart', 'bowercopy', 'prepJS', 'prepImages', 'prepStyles', 'prepFonts', 'modernizr', 'copyHeadFooter', 'compress:production', 'clean', 'notify:distDone']);
 
-    //DEFAULT
-    // grunt.registerTask('default', [
-    //     'browser'
-    // ]);
-    grunt.registerTask('default', ['bs-start', 'watch']);
+
+    grunt.registerTask('default', ['browserSync', 'watch']);
 };
